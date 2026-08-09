@@ -128,31 +128,39 @@ class TestSortProducts:
 
         assert manually_sorted == sorted_products
 
-    def test_sort_products_by_id_asc_with_sort_missing_order_asc(self, api_context):
+    def test_sort_products_by_id_with_sort_missing_order_asc(self, api_context):
         """
         tests if default ordering is sorting by id
         """
+        params = {ProductsConstants.LIMIT: 0}
 
-        response = api_context.get(Endpoints.PRODUCTS)
+        response = api_context.get(Endpoints.PRODUCTS, params=params)
         products = ProductsValidator.validate_products(response)
+        manually_sorted = sorted(products, key=lambda x: x["id"])
 
-        params = {ProductsConstants.ORDER: "asc"}
+        params = {ProductsConstants.ORDER: "asc",
+                  ProductsConstants.LIMIT: 0}
 
         response = api_context.get(Endpoints.PRODUCTS, params=params)
         sorted_products = ProductsValidator.validate_products(response)
 
-        assert products == sorted_products
+        assert manually_sorted == sorted_products
 
-    def test_sort_products_by_id_asc_with_sort_missing_order_desc(self, api_context):
+    def test_sort_products_by_id_with_sort_missing_order_desc(self, api_context):
         """
-        tests if default ordering is sorting by id in descending order.
+        tests if default ordering is sorting by id in descending order. This one fails, but I think that this should be
+        the proper behaviour for API.
         """
-        response = api_context.get(Endpoints.PRODUCTS)
+        params = {ProductsConstants.LIMIT: 0}
+
+        response = api_context.get(Endpoints.PRODUCTS, params=params)
         products = ProductsValidator.validate_products(response)
+        manually_sorted = sorted(products, key=lambda x: x["id"], reverse=True)
 
-        params = {ProductsConstants.ORDER: "desc"}
+        params = {ProductsConstants.ORDER: "desc",
+                  ProductsConstants.LIMIT: 0}
 
         response = api_context.get(Endpoints.PRODUCTS, params=params)
         sorted_products = ProductsValidator.validate_products(response)
 
-        assert products == sorted_products
+        assert manually_sorted == sorted_products

@@ -8,6 +8,11 @@ class ResponseValidator:
         assert response.status == 200
 
     @staticmethod
+    def assert_created_201(response: APIResponse) -> None:
+        assert response.ok
+        assert response.status == 201
+
+    @staticmethod
     def validate_response_is_json_dict(response: APIResponse) -> dict:
         assert "application/json" in response.headers["content-type"]
         assert isinstance(response.json(), dict)
@@ -17,6 +22,11 @@ class ResponseValidator:
     def assert_bad_request(response: APIResponse):
         assert not response.ok
         assert response.status == 400
+
+    @staticmethod
+    def assert_bad_request_or_conflict(response: APIResponse):
+        assert not response.ok
+        assert response.status in (400, 409)
 
     @staticmethod
     def assert_not_found(response: APIResponse):
