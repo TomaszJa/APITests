@@ -20,7 +20,7 @@ class ProductsValidator:
         return products
 
     @staticmethod
-    def validate_products(response: APIResponse) -> list:
+    def validate_products(response: APIResponse) -> list[ProductSchema]:
         ResponseValidator.assert_ok_200(response)
         json_response = ResponseValidator.validate_response_is_json_dict(response)
         products = ProductsValidator.validate_products_list_in_json_dict(json_response)

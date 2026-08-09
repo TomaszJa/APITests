@@ -5,3 +5,5 @@ class ProductsConstants:
     PRODUCTS_ALL_KEY = "total"
     LIMIT = "limit"
     SKIP = "skip"
+    SORTBY = "sortBy"
+    ORDER = "order"
