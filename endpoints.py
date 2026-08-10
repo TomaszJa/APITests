@@ -5,4 +5,5 @@ defining them on the class level
 """
 class Endpoints:
     PRODUCTS = "products"
+    ADD_PRODUCT = f"{PRODUCTS}/add"
     # in future may be extended to other endpoints
